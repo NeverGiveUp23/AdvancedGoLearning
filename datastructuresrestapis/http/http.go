@@ -12,13 +12,18 @@ import (
 
 func main() {
 	// always check the status is okay
-	fmt.Println(userInfo("nevergiveup23"))
+	var githubUsername string
+	fmt.Println(userInfo(githubUsername))
 	// io.Copy -> copies from the reader to the writer which is the Stdout
 	// io.Copy just reads the incoming data from the request body (response.Body) in this case and sends somewhere else (os.Stdout) in this case
 
 }
-// userInfo() returns the name and number of public_repos from github api
+
+// userInfo() returns the name and number of public_repos from GitHub API
 func userInfo(login string) (string, int, error) {
+	if _, err := fmt.Scan(&login); err != nil {
+		return "", 0, err
+	}
 	url := "https://api.github.com/users/" + login
 
 	res, err := http.Get(url)
@@ -33,9 +38,8 @@ func userInfo(login string) (string, int, error) {
 }
 
 func parseResponse(r io.Reader) (string, int, error) {
-	
 	var reply struct {
-		Name        string `json:"name"`
+		Name     string `json:"name"`
 		NumRepos int    `json:"public_repos"`
 	}
 
@@ -59,6 +63,5 @@ func parseResponse(r io.Reader) (string, int, error) {
 	JSON <-> []byte -> go: Unmarshal
 	Go -> []byte -> JSON: Marshal
 	JSON -> io.Reader -> Go: Decoder
-Go -> io.Writer -> JSON: Encoder 
-
+Go -> io.Writer -> JSON: Encoder
 */

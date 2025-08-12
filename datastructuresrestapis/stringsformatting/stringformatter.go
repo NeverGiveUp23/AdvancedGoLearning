@@ -7,6 +7,7 @@ import (
 )
 
 
+
 func main() {
 	banner("Go", 6)
 	banner("G💀", 6)
