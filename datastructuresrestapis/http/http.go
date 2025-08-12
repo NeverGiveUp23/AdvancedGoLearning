@@ -54,9 +54,9 @@ func (g *GitHubClient) GetUserInfo(ctx context.Context, login string) (string, i
 	case http.StatusNotFound:
 		return "", 0, fmt.Errorf("user %q not found", login)
 	case http.StatusForbidden:
-		return "", 0, fmt.Errorf("Github api rate limit exceeded")
+		return "", 0, fmt.Errorf("github api rate limit exceeded")
 	default:
-		return "", 0, fmt.Errorf("Github api error for %q: %s", login, res.Status)
+		return "", 0, fmt.Errorf("github api error for %q: %s", login, res.Status)
 	}
 }
 
