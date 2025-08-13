@@ -62,7 +62,7 @@ func (g *GitHubClient) GetUserInfo(ctx context.Context, login string) (string, i
 
 func main() {
 	// always check the status is okay
-	//	var githubUsername string
+	//v GitHubUsername string
 	//	fmt.Println(userInfo(githubUsername))
 	// io.Copy -> copies from the reader to the writer which is the Stdout
 	// io.Copy just reads the incoming data from the request body (response.Body) in this case and sends somewhere else (os.Stdout) in this case
