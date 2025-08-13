@@ -1,0 +1,14 @@
+package main
+
+import "fmt"
+
+func main() {
+	cart := []string{"apple", "orange"}
+
+	for i := range cart {
+		fmt.Println(cart[i])
+	}
+
+	fruit := cart[:3]
+	fmt.Println("fruit:", fruit)
+}
