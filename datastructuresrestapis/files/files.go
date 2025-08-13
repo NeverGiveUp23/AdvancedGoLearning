@@ -15,17 +15,18 @@ func main() {
 
 func KillServer(pidFile string) error {
 	if _, err := os.Create(pidFile); err != nil {
-		return err
+		return fmt.Errorf("failed to create file: %w", err)
 	}
 
 	file, err := os.Open(pidFile)
 	if err != nil {
+		log.Printf("error opening file: %v", err)
 		return err
 	}
 
 	err = os.WriteFile(pidFile, []byte("Original Message"), os.ModeAppend)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed tp write to file: %w", err)
 	}
 
 	// Error check option 1 by anonymous defer function
