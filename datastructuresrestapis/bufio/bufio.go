@@ -47,7 +47,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	// we need to fluch the data in the buffer
+	// We need to flush the data in the buffer
 	defer func() {
 		if err := writer.Flush(); err != nil {
 			log.Printf("Flush Error: %v", err)
