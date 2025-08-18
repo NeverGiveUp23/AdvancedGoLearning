@@ -20,12 +20,22 @@ func main() {
 
 	count := 15
 	fmt.Printf("Going to run multiple %d goroutines.\n", count)
-	for i := 0; i < count; i++ {
+	for i := range count {
 		waitGroup.Add(1)
 		go func(x int) {
 			defer waitGroup.Done()
 			fmt.Printf("%d ", x)
 		}(i)
+	}
+
+	fmt.Println("Entering Go routine #2")
+	count2 := count + 33
+	for j := range count2 {
+		waitGroup.Add(1)
+		go func(x int) {
+			defer waitGroup.Done()
+			fmt.Printf("%d ", x)
+		}(j)
 	}
 
 	// fmt.Printf("%v\n", waitGroup)
