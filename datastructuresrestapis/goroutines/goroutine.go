@@ -38,6 +38,14 @@ func main() {
 		}(j)
 	}
 
+	c := make(chan int, 1)
+	waitGroup.Add(1)
+	go func(c chan int) {
+		defer waitGroup.Done()
+		writeToChannel(c, 10)
+		fmt.Println("Exit...")
+	}(c)
+	fmt.Println("Read...", <-c)
 	// fmt.Printf("%v\n", waitGroup)
 	waitGroup.Wait()
 	fmt.Println("\nExiting....")
@@ -45,4 +53,13 @@ func main() {
 
 func printme(x int) {
 	fmt.Println(x)
+}
+
+func writeToChannel(c chan int, x int) {
+	c <- x
+	close(c)
+}
+
+func printer(ch chan bool) {
+	ch <- true
 }
