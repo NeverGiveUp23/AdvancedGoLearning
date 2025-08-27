@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 func main() {
 	willClose := make(chan complex64, 10)
@@ -14,10 +17,32 @@ func main() {
 
 	read := <-willClose
 	fmt.Println(read)
+
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	var ch chan bool = make(chan bool)
+	// write 5 values to channel with a single goroutine
+	go func(ch chan bool) {
+		defer wg.Done()
+		printer(ch, 5)
+	}(ch)
+	for val := range ch {
+		fmt.Println(val, " ")
+	}
+	fmt.Println()
+	for i := 0; i < 15; i++ {
+		fmt.Println(<-ch, " ")
+	}
+	fmt.Println()
+	wg.Wait()
 }
 
-func printer(ch chan<- bool) {
-	ch <- true
+func printer(ch chan<- bool, times int) {
+	for i := 0; i < times; i++ {
+		ch <- true
+	}
+	close(ch)
 }
 
 func writeToChannel(ch chan<- int, x int) {
